@@ -1,0 +1,19 @@
+Package: fad
+Type: Package
+Title: Factor analysis for data
+Version: 0.1-1
+Date: 2019-03-25
+Author: Somak Dutta [aut, cre],
+  Fan Dai [aut]
+  Ranjan Maitra [ctb]
+Maintainer: Somak Dutta <somakd@iastate.edu>
+Description: Performs maximum likelihood estimation of factor models for Gaussian data. The fad() function provides a replacement and extension of the factanal() function to analyze data in low or high-dimensional problems.
+License: GPL-3
+URL: https://github.com/somakd/fad
+Encoding: UTF-8
+Depends: R (>= 3.0.2), methods
+Imports: Matrix, Rcpp (>= 1.0.0), RcppEigen, RSpectra
+LinkingTo: Rcpp, RcppEigen
+LazyData: true
+NeedsCompilation: yes
+RoxygenNote: 6.1.1
