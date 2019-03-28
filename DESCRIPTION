@@ -11,8 +11,8 @@ Description: Performs maximum likelihood estimation of factor models for Gaussia
 License: GPL-3
 URL: https://github.com/somakd/fad
 Encoding: UTF-8
-Depends: R (>= 3.0.2), methods
-Imports: Matrix, Rcpp (>= 1.0.0), RcppEigen, RSpectra
+Depends: R (>= 3.0.2), methods, RSpectra
+Imports: Matrix, Rcpp (>= 1.0.0), RcppEigen
 LinkingTo: Rcpp, RcppEigen
 LazyData: true
 NeedsCompilation: yes
