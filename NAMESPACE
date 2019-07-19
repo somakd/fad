@@ -17,6 +17,6 @@ importFrom("RSpectra","eigs_sym");
 S3method(print,fad)
 export(fad.fit.X)
 export(fad.fit.cor)
-export(rotation)
+export(rotations)
 export(fad)
 
