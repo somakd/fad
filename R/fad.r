@@ -174,7 +174,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
                 gerr = 0,
                 sd = SD,
                 loglik = - 0.5*n*p,
-                BIC = loglik + factors*p*log(n),
+                BIC = -2*loglik + factors*p*log(n),
                 factors = q, method = "mle")
     class(ans) <- "fad"
     return(ans);
