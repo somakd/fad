@@ -155,14 +155,15 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
   
   if(factors == 0){
     if(have.x){
-    p <- ncol(X)
-    n <- nrow(X)
+    p <- ncol(z)
+    n.obs <- nrow(z)
+    mu <- colMeans(z)
 
     if(is.Matrix(z))
       {
-        SD <- colSD(z,mu)/sqrt(n)
+        SD <- colSD(z,mu)/sqrt(n.obs)
       } else{
-        SD <- apply(sweep(z,2,mu), 2,function(v) sqrt(mean(v^2)))/sqrt(n)
+        SD <- apply(sweep(z,2,mu), 2,function(v) sqrt(mean(v^2)))/sqrt(n.obs)
       }
       
     } else
@@ -173,8 +174,8 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
     ans <- list(loadings = matrix(0,p,0), uniquenesses = rep(1,p),
                 gerr = 0,
                 sd = SD,
-                loglik = - 0.5*n*p,
-                BIC = -2*loglik + factors*p*log(n),
+                loglik = - 0.5*n.obs*p,
+                BIC = -2*loglik + factors*p*log(n.obs),
                 factors = q, method = "mle")
     class(ans) <- "fad"
     return(ans);
