@@ -152,6 +152,33 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
                           "%d factor is too many for %d variables",
                           "%d factors are too many for %d variables"),
                  factors, p), domain = NA)
+  
+  if(factors == 0){
+    if(have.x){
+    p <- ncol(X)
+    n <- nrow(X)
+
+    if(is.Matrix(z))
+      {
+        SD <- colSD(z,mu)/sqrt(n)
+      } else{
+        SD <- apply(sweep(z,2,mu), 2,function(v) sqrt(mean(v^2)))/sqrt(n)
+      }
+      
+    } else
+    {
+      SD <- 1/isds
+    }
+     
+    ans <- list(loadings = matrix(0,p,0), uniquenesses = rep(1,p),
+                gerr = 0,
+                sd = SD,
+                loglik = - 0.5*n*p,
+                BIC = loglik + factors*p*log(n),
+                factors = q, method = "mle")
+    class(ans) <- "fad"
+    return(ans);
+  }
 
 
   cn <- list(nstart = 1, trace = FALSE, lower = 0.005)
