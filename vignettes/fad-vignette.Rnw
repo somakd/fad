@@ -1,5 +1,6 @@
 \documentclass{article}
 %\VignetteEngine{knitr::knitr}
+%\VignetteEncoding{UTF-8}
 %\VignetteIndexEntry{fad vignette}
 
 \usepackage[sc]{mathpazo}
