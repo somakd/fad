@@ -1,6 +1,6 @@
 \documentclass{article}
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{fad vignettes}
+%\VignetteIndexEntry{fad vignette}
 
 \usepackage[sc]{mathpazo}
 \usepackage[T1]{fontenc}
@@ -21,7 +21,6 @@
  \usepackage{authblk}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
 
 <<setup, include=FALSE, cache=FALSE,echo=FALSE>>=
 library(knitr)
@@ -141,8 +140,5 @@ out1 = fad(x = X,factors = 3)
 # or
 out2 = fad(covmat = cov(X), n.obs = n, factors = 3)
 @
-
-%\bibliographystyle{chicago}
-%\bibliography{acm}
 
 \end{document}
