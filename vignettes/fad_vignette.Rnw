@@ -1,6 +1,6 @@
 \documentclass{article}
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{fad vignette}
+%\VignetteIndexEntry{fad vignettes}
 
 \usepackage[sc]{mathpazo}
 \usepackage[T1]{fontenc}
