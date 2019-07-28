@@ -59,7 +59,7 @@ Users can call the main \texttt{fad} function to estimate a factor model,
 library(fad)
 @
 All the available options in \texttt{fad} are shown below, followed with detailed descriptions,
-<<cate-arg>>==
+<<fad-arg>>==
 args(fad)
 @
 \begin{description}
