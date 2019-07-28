@@ -22,6 +22,7 @@
  \usepackage{authblk}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 <<setup, include=FALSE, cache=FALSE,echo=FALSE>>=
 library(knitr)
@@ -49,7 +50,7 @@ Suppose $\mathbf{Y}_1,\ldots,\mathbf{Y}_n$ are $i.i.d.$ $p$-dimesional random ve
 
 Maximum likelihood (ML) estimation for covariance are derived from the log-likelihood after profiling out $\bm\mu$,
 \begin{equation}\label{eqn:loglikelihood}
-\ell(\Lambda,\Psi) = -\shalf n\{p\log(2\pi) + \log\det\Sigma +\Tr\Sigma^{-1}\mathbf{S}\}
+\ell(\Lambda,\Psi) = -0.5\times n\{p\log(2\pi) + \log\det\Sigma +\mathrm{Tr}\{\Sigma^{-1}\mathbf{S}\}\}
 \end{equation}
 Where $\mathbf{Y}$ denotes the $n\times p$ data matrix and $\bar{\mathbf{Y}}$ is sample means. $\mathbf{S} = n^{-1}(\mathbf{Y} - \mathbf{1}\bar{\mathbf{Y}}^\top)^\top(\mathbf{Y} - \mathbf{1}\bar{\mathbf{Y}}^\top)$ represents the sample covariance matrix.
 
