@@ -291,7 +291,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
   Gamma = diag(factors) + crossprod(fit$loadings,{1/fit$uniquenesses}*fit$loadings);
   R = chol(Gamma)
   logdet = sum(log(fit$uniquenesses)) + 2*sum(log(diag(R)))
-  logdet0 = -sum(log(isds));
+  logdet0 = 2*sum(log(isds));
   fit$loglik = {-logdet + logdet0}*0.5*n.obs - n.obs*p/2;
   if(is.na(n.obs)) warning("Number of obs. not supplied. BIC cannot be computed")
   fit$BIC = -2*fit$loglik + factors*p*log(n.obs);
