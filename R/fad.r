@@ -295,6 +295,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
   fit$loglik = {-logdet + logdet0}*0.5*n.obs - n.obs*p/2;
   if(is.na(n.obs)) warning("Number of obs. not supplied. BIC cannot be computed")
   fit$BIC = -2*fit$loglik + factors*p*log(n.obs);
+  fit$sd = 1/isds;
   fit$n.obs <- n.obs
   fit$call <- cl
   fit
