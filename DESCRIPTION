@@ -1,8 +1,8 @@
 Package: fad
 Type: Package
 Title: Factor analysis for data
-Version: 0.1-1-2
-Date: 2019-11-08
+Version: 0.1-2
+Date: 2019-11-10
 Author: Somak Dutta [aut, cre],
   Fan Dai [aut]
   Ranjan Maitra [ctb]
