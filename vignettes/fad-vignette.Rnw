@@ -4,6 +4,7 @@
 %\VignetteIndexEntry{fad vignette}
 
 \usepackage[sc]{mathpazo}
+\usepackage{bm}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
@@ -22,7 +23,7 @@
  \usepackage{authblk}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+%\SweaveOpts{concordance=TRUE}
 
 <<setup, include=FALSE, cache=FALSE,echo=FALSE>>=
 library(knitr)
@@ -125,7 +126,7 @@ ind = which.min(BICs)-1# obtain the optimal factor favored by BIC
 ind
 @
 
-<<est-sim-cov,cache=TRUE>>==
+<<est-sim-cov1,cache=TRUE>>==
 BICs = rep(0,11) # store BIC values
 for(i in 1:11){
   out = fad(covmat = cov(X), n.obs = n, factors = i-1)
@@ -137,7 +138,7 @@ ind
 @
 
 BIC selected the correct factor of 3 and we can then fit with the optimal factor model as
-<<est-sim-cov,cache=TRUE>>==
+<<est-sim-cov2,cache=TRUE>>==
 out1 = fad(x = X,factors = 3)
 # or
 out2 = fad(covmat = cov(X), n.obs = n, factors = 3)

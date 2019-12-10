@@ -1,6 +1,6 @@
 Package: fad
 Type: Package
-Title: Factor analysis for data
+Title: Factor Analysis for Data
 Version: 0.1-2
 Date: 2019-11-10
 Author: Somak Dutta [aut, cre],
@@ -8,13 +8,14 @@ Author: Somak Dutta [aut, cre],
   Ranjan Maitra [ctb]
 Maintainer: Somak Dutta <somakd@iastate.edu>
 Description: Performs maximum likelihood estimation of factor models for Gaussian data. The fad() function provides a replacement and extension of the factanal() function to analyze data in low or high-dimensional problems.
-License: GPL-3
-VignetteBuilder: knitr
+License: GPL-3 | file LICENSE
 URL: https://github.com/somakd/fad
 Encoding: UTF-8
 Depends: R (>= 3.0.2), methods, RSpectra
-Imports: Matrix, Rcpp (>= 1.0.0), RcppEigen
-LinkingTo: Rcpp, RcppEigen
+Imports: Matrix (>= 1.1-0), Rcpp (>= 1.0.0)
+LinkingTo: Rcpp, RcppEigen (>= 0.3.3.3.0)
 LazyData: true
 NeedsCompilation: yes
+Suggests: knitr
+VignetteBuilder: knitr
 RoxygenNote: 6.1.1
