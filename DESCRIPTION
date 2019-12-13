@@ -12,7 +12,7 @@ License: GPL-3 | file LICENSE
 URL: https://github.com/somakd/fad
 Encoding: UTF-8
 Depends: R (>= 3.0.2), methods, RSpectra
-Imports: Matrix (>= 1.1-0), Rcpp (>= 1.0.0)
+Imports: Matrix (>= 1.1-0), Rcpp (>= 0.11.5)
 LinkingTo: Rcpp, RcppEigen (>= 0.3.3.3.0)
 LazyData: true
 NeedsCompilation: yes

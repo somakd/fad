@@ -2,7 +2,6 @@
 % Please edit documentation in R/fad.r
 \name{fad}
 \alias{fad}
-\alias{print.fad}
 \title{Factor Analysis for data (high or low dimensional).}
 \usage{
 fad(
@@ -20,8 +19,6 @@ fad(
   lower = 0.005,
   ...
 )
-
-\method{print}{fad}(x, digits = 3, ...)
 }
 \arguments{
 \item{x}{A formula or a numeric matrix or an object that can be coerced to a

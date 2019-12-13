@@ -350,31 +350,3 @@ sortLoadings <- function(Lambda)
 }
 
 
-
-#' @export
-#' @rdname fad
-print.fad <- function(x, digits = 3, ...)
-{
-  cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
-  cat("Uniquenesses:\n")
-  print(round(x$uniquenesses, digits), ...)
-  print(x$loadings, digits = digits, ...)
-  if (!is.null(x$rotmat)){
-    
-    tmat <- solve(x$rotmat)
-    R <- tmat %*% t(tmat)
-    factors <- x$factors
-    rownames(R) <- colnames(R) <- paste0("Factor", 1:factors)
-    
-    if (TRUE != all.equal(c(R), c(diag(factors)))){
-      cat("\nFactor Correlations:\n")
-      print(R, digits=digits, ...)
-    }
-    
-    
-  }
-  
-  if(!is.na(x$BIC))    cat("\nThe BIC is: ",x$BIC)
-  
-  invisible(x)
-}
