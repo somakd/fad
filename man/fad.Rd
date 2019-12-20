@@ -110,20 +110,7 @@ D <- runif(200,0.2,0.9)
 ## ~i.i.d. N(0,LL'+diag(D))
 X <- tcrossprod(matrix(rnorm(50*3),50,3),L) + matrix(rnorm(50*200),50,200) \%*\% diag(sqrt(D))
 
-
-## Fit factor models with number of factor=1,2,3,4,5.
-BICS = numeric(5)
-for(i in 1:5)
-{
-fit = fad(X,i)
-BICS[i] = fit$BIC
-}
-
-## Get the number of factors as chosen by BIC
-which.min(BICS) # 3 (the actual number of factors)
-
-
-## refit with 3 factors:
+## Fit a factor model with 3 factors:
 fit = fad(X,3)
 
 
