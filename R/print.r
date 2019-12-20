@@ -4,7 +4,7 @@
 #' @param x an object of class \code{fad}.
 #' @param digits number of decimal places to use in printing uniquenesses and loadings.
 #' @param \dots further arguments to \code{print}.
-#' 
+#' @return None.
 #' @export
 print.fad <- function(x, digits = 3, ...)
 {

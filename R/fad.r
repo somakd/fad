@@ -65,28 +65,37 @@
 #' @seealso \code{\link[stats]{factanal}}
 #'  
 #'@examples
-#'\dontrun{
 #'set.seed(1234)
-#'# Simulate a 200 x 3 loadings matrix ~i.i.d N(0,1)
+#'
+#'## Simulate a 200 x 3 loadings matrix ~i.i.d N(0,1)
 #'L <- matrix(rnorm(200*3),200,3) 
-#'# Simulate the uniquenesses i.i.d U(0.2,0.9)
+#'
+#'## Simulate the uniquenesses i.i.d U(0.2,0.9)
 #'D <- runif(200,0.2,0.9) 
-#'# Generate a data matrix of size 50 x 200 with rows
-#'#~i.i.d. N(0,LL'+diag(D))
+#'
+#'## Generate a data matrix of size 50 x 200 with rows
+#'## ~i.i.d. N(0,LL'+diag(D))
 #'X <- tcrossprod(matrix(rnorm(50*3),50,3),L) + matrix(rnorm(50*200),50,200) %*% diag(sqrt(D))
-#'#Fit factor models with number of factor=1,2,3,4,5.
+#'
+#'
+#'## Fit factor models with number of factor=1,2,3,4,5.
 #'BICS = numeric(5)
 #'for(i in 1:5)
 #'{
 #' fit = fad(X,i)
 #' BICS[i] = fit$BIC
 #'}
+#'
+#'## Get the number of factors as chosen by BIC
 #'which.min(BICS) # 3 (the actual number of factors)
-#'# refit with 3 factors:
+#'
+#'
+#'## refit with 3 factors:
 #'fit = fad(X,3)
-#'# Print the loadings:
+#'
+#'
+#'## Print the loadings:
 #' print(fit$loadings)
-#'}
 #'
 #' @export
 fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,

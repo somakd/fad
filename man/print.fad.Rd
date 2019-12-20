@@ -13,6 +13,9 @@
 
 \item{\dots}{further arguments to \code{print}.}
 }
+\value{
+None.
+}
 \description{
 Prints the output of the \code{fad}.
 }
