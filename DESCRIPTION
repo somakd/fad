@@ -1,8 +1,8 @@
 Package: fad
 Type: Package
 Title: Factor Analysis for Data
-Version: 0.1-4
-Date: 2019-12-20
+Version: 0.2-1
+Date: 2020-01-16
 Authors@R: c(
     person("Somak", "Dutta", , "somakd@iastate.edu", c("aut", "cre")),
     person("Fan", "Dai", , "fd43@iastate.edu", "aut"),
@@ -10,8 +10,8 @@ Authors@R: c(
     )
 Maintainer: Somak Dutta <somakd@iastate.edu>
 Description: Compute maximum likelihood estimators of parameters in a Gaussian factor model using
-  the the matrix-free methodology described in Dai et al. (2020+) <doi:10.1080/10618600.2019.1704296>.
-  In contrast to the "factanal" function from "stats" package, fad can handle high-dimensional datasets where
+  the the matrix-free methodology described in Dai et al. (2019) <doi:10.1080/10618600.2019.1704296>.
+  In contrast to the factanal() function from 'stats' package, fad() can handle high-dimensional datasets where
   number of variables exceed the sample size and is also substantially faster than the EM algorithms.
 License: GPL-3
 URL: https://github.com/somakd/fad
@@ -19,7 +19,7 @@ BugReports: https://github.com/somakd/fad/issues
 Encoding: UTF-8
 Depends: R (>= 3.0.2), methods, RSpectra
 Imports: Matrix (>= 1.1-0), Rcpp (>= 0.11.5)
-LinkingTo: Rcpp, RcppEigen (>= 0.3.3.3.0)
+LinkingTo: Rcpp
 LazyData: true
 NeedsCompilation: yes
 Suggests: knitr

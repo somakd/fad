@@ -11,7 +11,7 @@ importClassesFrom(Matrix, dgeMatrix, dgCMatrix, dsCMatrix)
 importFrom("methods", "as")
 
 
-importFrom("RSpectra","eigs_sym");
+importFrom("RSpectra","eigs_sym","svds");
 
 
 S3method(print,fad)

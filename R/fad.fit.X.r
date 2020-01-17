@@ -22,7 +22,7 @@ fad.fit.X <-
     }
     fngr <- function(Psi) FAfngr(Psi = Psi,X = X,q = q,iSD=iSD,mu=mu)
 
-    res <- optim_share(par = start,fngr = fngr,lower=lower,upper=1,method="L-BFGS-B",
+    res <- optim_fad(par = start,fngr = fngr,lower=lower,upper=1,method="L-BFGS-B",
                        control = c(list(fnscale=1,parscale = rep(0.01, length(start)),maxit = maxit,
                                         factr=1e2)))
 
@@ -51,8 +51,8 @@ FAfngr <- function(Psi, X, q,iSD,mu)
   n <- nrow(X)
   sc <- sqrt(Psi)
 
-  scaling <- iSD/sc
-  svdsres <- svds_XmD(X,mu,scaling,q)
+  scaling <- sc/iSD #iSD/sc
+  svdsres <- svds(X,k=q,nu=0,nv=q,opts=list(center=mu,scale=scaling)) # svds_XmD(X,mu,scaling,q)
   L <- svdsres$v
 
   e <- svdsres$d^2
@@ -74,8 +74,8 @@ FAout <- function(Psi, X, q,iSD,mu)
   n <- nrow(X)
   sc <- sqrt(Psi)
 
-  scaling <- iSD/sc
-  svdsres <- svds_XmD(X,mu,scaling,q)
+  scaling <- sc/iSD #iSD/sc
+  svdsres <- svds(X,k=q,nu=0,nv=q,opts=list(center=mu,scale=scaling)) # svds_XmD(X,mu,scaling,q)
 
   load <- .postmdiag(svdsres$v , sqrt(pmax(svdsres$d^2-1,0)))
   load <- sc*load

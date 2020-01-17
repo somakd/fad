@@ -12,7 +12,7 @@ fad.fit.cor <-
     # print(start)
     fngr <- function(Psi) FAfngrC(Psi,R,q)
 
-    res <- optim_share(par = start,fngr = fngr,lower=lower,upper=1,method="L-BFGS-B",
+    res <- optim_fad(par = start,fngr = fngr,lower=lower,upper=1,method="L-BFGS-B",
                        control = c(list(fnscale=1,parscale = rep(0.01, length(start)),maxit = maxit,
                                         factr=1e2)))
 
