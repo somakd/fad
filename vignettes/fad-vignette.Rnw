@@ -36,8 +36,8 @@ Sys.setenv(RSTUDIO_PDFLATEX = "/Library/TeX/texbin/latexmk")
 
 \title{An Introduction to \texttt{FAD} for Exploratory Factor Analysis with High-dimensional Gaussian Data}
 
-\author{Somak Dutta}
 \author{Fan Dai}
+\author{Somak Dutta}
 \author{Ranjan Maitra}
 \affil{Department of Statistics, Iowa State University \\somakd@iastate.edu, fd43@iastate.edu, maitra@iastate.edu}
 
