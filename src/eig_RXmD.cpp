@@ -1,6 +1,6 @@
 
-#ifndef _TEST_RXmD_CC
-#define _TEST_RXmD_CC
+#ifndef _EIGS_SYM_RXmD_CC
+#define _EIGS_SYM_RXmD_CC
 #include <RcppEigen.h>
 #include <Rcpp.h>
 #include <SymEigs.h>
