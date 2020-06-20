@@ -6,6 +6,19 @@
 
 using namespace Rcpp;
 
+// ERF
+NumericVector ERF(int P, NumericVector Mu, NumericVector Sigma);
+RcppExport SEXP _fad_ERF(SEXP PSEXP, SEXP MuSEXP, SEXP SigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type P(PSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Mu(MuSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Sigma(SigmaSEXP);
+    rcpp_result_gen = Rcpp::wrap(ERF(P, Mu, Sigma));
+    return rcpp_result_gen;
+END_RCPP
+}
 // eigs_sym_RXmD
 RcppExport SEXP eigs_sym_RXmD(SEXP Xmat, NumericVector mu, NumericVector D, NumericVector er, NumericVector vr, NumericVector ybar, int nev, int matclass);
 RcppExport SEXP _fad_eigs_sym_RXmD(SEXP XmatSEXP, SEXP muSEXP, SEXP DSEXP, SEXP erSEXP, SEXP vrSEXP, SEXP ybarSEXP, SEXP nevSEXP, SEXP matclassSEXP) {
@@ -62,12 +75,88 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RXM_CC
+NumericVector RXM_CC(NumericMatrix X, NumericVector ER);
+RcppExport SEXP _fad_RXM_CC(SEXP XSEXP, SEXP ERSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ER(ERSEXP);
+    rcpp_result_gen = Rcpp::wrap(RXM_CC(X, ER));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cmdg_CC
+NumericVector cmdg_CC(NumericMatrix L, NumericVector D);
+RcppExport SEXP _fad_cmdg_CC(SEXP LSEXP, SEXP DSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type L(LSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type D(DSEXP);
+    rcpp_result_gen = Rcpp::wrap(cmdg_CC(L, D));
+    return rcpp_result_gen;
+END_RCPP
+}
+// taom_CC
+List taom_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg);
+RcppExport SEXP _fad_taom_CC(SEXP XSEXP, SEXP LSEXP, SEXP DSEXP, SEXP muSEXP, SEXP cmatdgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type L(LSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type D(DSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type cmatdg(cmatdgSEXP);
+    rcpp_result_gen = Rcpp::wrap(taom_CC(X, L, D, mu, cmatdg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ism_CC
+NumericVector ism_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg);
+RcppExport SEXP _fad_ism_CC(SEXP XSEXP, SEXP LSEXP, SEXP DSEXP, SEXP muSEXP, SEXP cmatdgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type L(LSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type D(DSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type cmatdg(cmatdgSEXP);
+    rcpp_result_gen = Rcpp::wrap(ism_CC(X, L, D, mu, cmatdg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mSD_CC
+NumericVector mSD_CC(NumericMatrix X, NumericVector mu, NumericVector D, NumericVector ER, NumericVector VR, NumericVector ybar);
+RcppExport SEXP _fad_mSD_CC(SEXP XSEXP, SEXP muSEXP, SEXP DSEXP, SEXP ERSEXP, SEXP VRSEXP, SEXP ybarSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type D(DSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ER(ERSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type VR(VRSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ybar(ybarSEXP);
+    rcpp_result_gen = Rcpp::wrap(mSD_CC(X, mu, D, ER, VR, ybar));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_fad_ERF", (DL_FUNC) &_fad_ERF, 3},
     {"_fad_eigs_sym_RXmD", (DL_FUNC) &_fad_eigs_sym_RXmD, 8},
     {"_fad_postmdiag", (DL_FUNC) &_fad_postmdiag, 2},
     {"_fad_colSumSqdgC", (DL_FUNC) &_fad_colSumSqdgC, 3},
     {"_fad_colSumSq", (DL_FUNC) &_fad_colSumSq, 3},
+    {"_fad_RXM_CC", (DL_FUNC) &_fad_RXM_CC, 2},
+    {"_fad_cmdg_CC", (DL_FUNC) &_fad_cmdg_CC, 2},
+    {"_fad_taom_CC", (DL_FUNC) &_fad_taom_CC, 5},
+    {"_fad_ism_CC", (DL_FUNC) &_fad_ism_CC, 5},
+    {"_fad_mSD_CC", (DL_FUNC) &_fad_mSD_CC, 6},
     {NULL, NULL, 0}
 };
 

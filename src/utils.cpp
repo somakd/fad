@@ -101,7 +101,7 @@ NumericVector colSumSq(NumericMatrix X,NumericVector D,NumericVector mu)
 }
 
 // [[Rcpp::export(RXM)]]
-NumericVector RXM(NumericMatrix X,NumericVector ER)
+NumericVector RXM_CC(NumericMatrix X,NumericVector ER)
 {
   int n = X.nrow(), p = X.ncol();
   NumericVector v(p);
@@ -121,7 +121,7 @@ NumericVector RXM(NumericMatrix X,NumericVector ER)
 
 //compute diagonal of cmat
 // [[Rcpp::export(cmdg)]]
-NumericVector cmdg(NumericMatrix L, NumericVector D){
+NumericVector cmdg_CC(NumericMatrix L, NumericVector D){
   int p = L.nrow(), q = L.ncol();
   NumericVector v(q);
   for(int k=0;k<q;++k){
@@ -137,7 +137,7 @@ NumericVector cmdg(NumericMatrix L, NumericVector D){
 
 // compute tao and iSxM
 // [[Rcpp::export(taom)]]
-List taom(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg)
+List taom_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg)
 {
   int n = X.nrow(), p = X.ncol(), q = L.ncol();
   NumericVector tao(n), xm(n), idm(p), summ2(q);
@@ -179,7 +179,7 @@ List taom(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, N
 
 // compute only iSxM
 // [[Rcpp::export(ism)]]
-NumericVector ism(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg)
+NumericVector ism_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg)
 {
   int n = X.nrow(), p = X.ncol(), q = L.ncol();
   NumericVector xm(n), idm(p), summ2(q);
@@ -217,7 +217,7 @@ NumericVector ism(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVect
 
 // compute the SD vector correspond to the C
 // [[Rcpp::export(mSD)]]
-NumericVector mSD(NumericMatrix X, NumericVector mu, NumericVector D,
+NumericVector mSD_CC(NumericMatrix X, NumericVector mu, NumericVector D,
                   NumericVector ER, NumericVector VR, NumericVector ybar )
     {
     int n = X.nrow(), p = X.ncol();
