@@ -100,14 +100,140 @@ NumericVector colSumSq(NumericMatrix X,NumericVector D,NumericVector mu)
   return(v);
 }
 
+// [[Rcpp::export(RXM)]]
+NumericVector RXM(NumericMatrix X,NumericVector ER)
+{
+  int n = X.nrow(), p = X.ncol();
+  NumericVector v(p);
+  
+  for(int j=0;j<p;++j)
+  {
+    double sum = 0.0;
+    NumericMatrix::iterator ix = X.begin() + j*n;
+    for(int i=0;i<n;++i)
+      sum += ER[i] * (*(ix++));
+    
+    v[j] = sum/n;
+  }
+  
+  return(v);
+}
+
+//compute diagonal of cmat
+// [[Rcpp::export(cmdg)]]
+NumericVector cmdg(NumericMatrix L, NumericVector D){
+  int p = L.nrow(), q = L.ncol();
+  NumericVector v(q);
+  for(int k=0;k<q;++k){
+    double  tmp = 1.0;
+    for(int j=0;j<p;++j){
+      tmp += 1/D[j]*L(j,k)*L(j,k);
+    }
+    v[k] = 1/tmp;
+  }
+  return(v);
+}
 
 
+// compute tao and iSxM
+// [[Rcpp::export(taom)]]
+List taom(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg)
+{
+  int n = X.nrow(), p = X.ncol(), q = L.ncol();
+  NumericVector tao(n), xm(n), idm(p), summ2(q);
+  
+  for(int k=0;k<q;++k){
+    for(int j=0;j<p;++j){
+      if(k==0) {idm[j] = 1/D[j]*mu[j];}
+      summ2[k] += idm[j]*L(j,k);
+    }
+  }
+  
+  for(int i=0;i<n;++i)
+  {
+    NumericVector idx(p);
+    double sumt1 = 0.0, summ1 = 0.0, tempt = 0.0, tempm = 0.0;
+    
+    for(int k=0;k<q;++k){
+      double sumt2 = 0.0;
+      
+      for(int j=0;j<p;++j){
+        if(k == 0) {
+          idx[j] = 1/D[j]*X(i,j);
+          sumt1 += idx[j]*X(i,j);
+          summ1 += idx[j]*mu[j];
+          }
+        sumt2 += idx[j]*L(j,k);
+        }
+        tempt += sumt2*sumt2*cmatdg[k];
+        tempm += sumt2*summ2[k]*cmatdg[k];
+      }
+    tao[i] = sumt1 - tempt;
+    xm[i] = summ1 - tempm;
+  }
+  
+  return List::create(Named("tao") = tao,
+                      Named("iSxM") = xm);
+  
+}
 
+// compute only iSxM
+// [[Rcpp::export(ism)]]
+NumericVector ism(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu, NumericVector cmatdg)
+{
+  int n = X.nrow(), p = X.ncol(), q = L.ncol();
+  NumericVector xm(n), idm(p), summ2(q);
+  
+  for(int k=0;k<q;++k){
+    for(int j=0;j<p;++j){
+      if(k==0) {idm[j] = 1/D[j]*mu[j];}
+      summ2[k] += idm[j]*L(j,k);
+    }
+  }
+  
+  for(int i=0;i<n;++i)
+  {
+    NumericVector idx(p);
+    double summ1 = 0.0, tempm = 0.0;
+    
+    for(int k=0;k<q;++k){
+      double sumt2 = 0.0;
+      
+      for(int j=0;j<p;++j){
+        if(k == 0) {
+          idx[j] = 1/D[j]*X(i,j);
+          summ1 += idx[j]*mu[j];
+        }
+        sumt2 += idx[j]*L(j,k);
+      }
+      tempm += sumt2*summ2[k]*cmatdg[k];
+    }
+    xm[i] = summ1 - tempm;
+  }
+  
+  return(xm);
+  
+}
 
-
-
-
-
+// compute the SD vector correspond to the C
+// [[Rcpp::export(mSD)]]
+NumericVector mSD(NumericMatrix X, NumericVector mu, NumericVector D,
+                  NumericVector ER, NumericVector VR, NumericVector ybar )
+    {
+    int n = X.nrow(), p = X.ncol();
+    NumericVector v(p);
+    
+    for(int j=0;j<p;++j)
+    {
+      double sum =0.0, temp = 0.0;
+      for(int i=0;i<n;++i){
+        sum += (ER[i]*ER[i]+VR[i])*X(i,j)*X(i,j)/n;
+      }
+      temp = sum - (2*ybar[j]*mu[j] - mu[j]*mu[j]);
+      v[j] = std::sqrt(temp);
+    }
+    return(v);
+    }
 
 #endif
 
