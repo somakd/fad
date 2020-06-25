@@ -1,8 +1,8 @@
 Package: fad
 Type: Package
 Title: Factor Analysis for Data
-Version: 0.2-3
-Date: 2020-06-20
+Version: 0.2-4
+Date: 2020-06-24
 Authors@R: c(
     person("Somak", "Dutta", , "somakd@iastate.edu", c("aut", "cre")),
     person("Fan", "Dai", , "fd43@iastate.edu", "aut"),

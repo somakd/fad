@@ -141,17 +141,20 @@ List taom_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericVector mu
 {
   int n = X.nrow(), p = X.ncol(), q = L.ncol();
   NumericVector tao(n), xm(n), idm(p), summ2(q);
+  NumericVector idx(p);
   
+  for(int j=0;j<p;++j) {
+	idm[j] = 1/D[j]*mu[j];
+  }
+
   for(int k=0;k<q;++k){
     for(int j=0;j<p;++j){
-      if(k==0) {idm[j] = 1/D[j]*mu[j];}
       summ2[k] += idm[j]*L(j,k);
     }
   }
   
   for(int i=0;i<n;++i)
   {
-    NumericVector idx(p);
     double sumt1 = 0.0, summ1 = 0.0, tempt = 0.0, tempm = 0.0;
     
     for(int k=0;k<q;++k){
@@ -183,6 +186,7 @@ NumericVector ism_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericV
 {
   int n = X.nrow(), p = X.ncol(), q = L.ncol();
   NumericVector xm(n), idm(p), summ2(q);
+  NumericVector idx(p);
   
   for(int k=0;k<q;++k){
     for(int j=0;j<p;++j){
@@ -193,7 +197,6 @@ NumericVector ism_CC(NumericMatrix X, NumericMatrix L, NumericVector D, NumericV
   
   for(int i=0;i<n;++i)
   {
-    NumericVector idx(p);
     double summ1 = 0.0, tempm = 0.0;
     
     for(int k=0;k<q;++k){
