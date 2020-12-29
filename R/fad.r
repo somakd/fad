@@ -203,7 +203,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
   }
 
 
-  cn <- list(nstart = 1, trace = FALSE, lower = 0.005)
+  cn <- list(nstart = 1, trace = FALSE, lower = lower)
   cn[names(control)] <- control
   more <- list(...)[c("nstart", "trace", "lower", "opt", "rotate")]
   if(length(more)) cn[names(more)] <- more
@@ -251,7 +251,8 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
       cat("start", i, "value:", format(nfit$criteria[1L]),
           "uniqs:", format(as.vector(round(nfit$uniquenesses, 4))), "\n")
     if(nfit$criteria[1L] < best) {
-      if(!nfit$converged && nfit$gerr > p*1e-5) warning("Algorithm may not have converged. Try another starting value.")
+      # Not checking if  nfit$gerr > p*1e-5 in the following.
+      if(!nfit$converged) warning("Algorithm may not have converged. Try another starting value.")
       fit <- nfit
       best <- fit$criteria[1L]
     }
@@ -284,6 +285,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
                sc = NULL
              } else {
                zz <- scale(z, TRUE, TRUE)
+               if(is.null(covmat)) cv <- cor(z)
                sc <- zz %*% solve(cv, Lambda)
                if(!is.null(Phi <- attr(Lambda, "covariance")))
                  sc <- sc %*% Phi
