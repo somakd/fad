@@ -27,7 +27,6 @@ print.fad <- function(x, digits = 3, ...)
     
   }
   
-  if(!is.na(x$BIC))    cat("\nThe BIC is: ",x$BIC)
-  
+  if(!is.na(x$BIC))    cat("\nThe BIC is: ",x$BIC,"\n")
   invisible(x)
 }

@@ -3,7 +3,7 @@ useDynLib(fad, .registration = TRUE)
 importFrom(Rcpp, evalCpp)
 
 importFrom("stats", "cov2cor", "lm.fit", "model.matrix", "napredict",
-                "optim", "runif", "sd", "setNames", "terms")
+                "optim", "runif", "sd", "setNames", "terms","cor")
 
 importFrom("Matrix","Diagonal")
 importClassesFrom(Matrix, dgeMatrix, dgCMatrix, dsCMatrix)
