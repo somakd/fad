@@ -1,4 +1,3 @@
-PKG_CPPFLAGS = -w
 PKG_LIBS = $(BLAS_LIBS) $(FLIBS)
 
 .PHONY: all clean

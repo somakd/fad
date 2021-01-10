@@ -1,8 +1,8 @@
 Package: fad
 Type: Package
 Title: Factor Analysis for Data
-Version: 0.3-1
-Date: 2020-12-29
+Version: 0.3-2
+Date: 2021-01-09
 Authors@R: c(
     person("Somak", "Dutta", , "somakd@iastate.edu", c("aut", "cre")),
     person("Fan", "Dai", , "fd43@iastate.edu", "aut"),
@@ -10,7 +10,7 @@ Authors@R: c(
     )
 Maintainer: Somak Dutta <somakd@iastate.edu>
 Description: Compute maximum likelihood estimators of parameters in a Gaussian factor model using
-  the the matrix-free methodology described in Dai et al. (2019) <doi:10.1080/10618600.2019.1704296>.
+  the the matrix-free methodology described in Dai et al. (2020) <doi:10.1080/10618600.2019.1704296>.
   In contrast to the factanal() function from 'stats' package, fad() can handle high-dimensional datasets where
   number of variables exceed the sample size and is also substantially faster than the EM algorithms.
 License: GPL-3

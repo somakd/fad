@@ -112,6 +112,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
   else if (is.null(covmat)) {
     if(missing(x)) stop("neither 'x' nor 'covmat' supplied")
     have.x <- TRUE
+    if(inherits(x,"data.frame")) stop("Data frames are not allowed. Convert it into a dense or a sparse matrix.")
     if(inherits(x, "formula")) {
       ## this is not a `standard' model-fitting function,
       ## so no need to consider contrasts or levels
@@ -141,12 +142,12 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
 
 
     } else {
-      z <- x
+      z <- x      
       p <- ncol(z)
       n.obs <- nrow(z)
 
       if(!is.numeric(z) && !is.Matrix(z))
-        stop("factor analysis applies only to numerical variables")
+        stop("factor analysis applies only to numerical variables.")
       if(!missing(subset)) z <- z[subset, , drop = FALSE]
 
       means <- colMeans(z)
