@@ -10,8 +10,10 @@
  * // using namespace std;
  */
 
+#define STRICT_R_HEADERS
 #include <Rcpp.h>
 using namespace Rcpp;
+#include <float.h>
 #include <math.h>
 
 
