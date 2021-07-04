@@ -1,6 +1,7 @@
 
 #ifndef _EIGS_SYM_RXmD_CC
 #define _EIGS_SYM_RXmD_CC
+#define STRICT_R_HEADERS
 #include <RcppEigen.h>
 #include <Rcpp.h>
 #include <SymEigs.h>
