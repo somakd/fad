@@ -11,6 +11,7 @@
 #' @param M The initial values of mean.
 #' @param L The initial values of loading matrix.
 #' @param D The initial values of uniquenesses.
+#' @param gamma The common constant used in the eBIC formula. Default 'NA'.
 #' @param maxiter The maximum iterations. Default 10,000
 #' @param epsi The absolute difference between final data log-likelihood values
 #'   on consecutive step. Default 0.0001.
@@ -25,13 +26,15 @@
 #' \item{sd}{The estimated standard deviations.}
 #' \item{iter}{The number of iterations}
 #' \item{gerr}{the difference between the gradients on consecutive step.}
-#' \item{loglik}{The maximum log-likelihood.}
+#' \item{loglik,eBIC}{The maximum log-likelihood the extended Bayesian 
+#' Information Criteria (Chen and Chen,2008).}
 #'
 #' @export
-fads = function(inputs,q,ii = 123,M=NULL,L=NULL,D=NULL,
+fads = function(inputs,q,ii = 123,M=NULL,L=NULL,D=NULL,gamma=NA,
                                  maxiter = 10000,epsi = 1e-4){
   # Purpose: AECM FOR FACTOR ANALYSIS OF DIRECTIONAL DATA
   # output: mL,mD: correlation parameters
+  N = nrow(inputs)
   P = ncol(inputs)            
   iter = 0                    # loop step
 
@@ -126,9 +129,12 @@ fads = function(inputs,q,ii = 123,M=NULL,L=NULL,D=NULL,
   #svd.H = svd(crossprod(out$mL,as.numeric(1/out$mD)*out$mL))
   #Z <- out$Y %*% (as.numeric(1/out$mD)*out$mL) %*% (svd.H$u %*% (1/svd.H$d * t(svd.H$v)))
   
+  if(is.na(gamma)){
+    gamma = max(1-1/(2*log(P,base = N)),0)
+  }
+  eBIC = -2*llk + P*q*(log(N) + 2*gamma*log(P))
   
-  
-  fit <- list(iter = iter, gerr = out$gerr, loglik = llk, 
+  fit <- list(iter = iter, gerr = out$gerr, loglik = llk, eBIC = eBIC,
               mu = out$mmu, sd = sqrt(out$mvar), uniquenesses = out$mD, loadings = out$mL)
   class(fit$loadings) <- "loadings"
   class(fit) <- "fads"
