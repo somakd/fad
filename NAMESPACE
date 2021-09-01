@@ -16,4 +16,5 @@ importFrom("RSpectra","eigs_sym","svds");
 
 S3method(print,fad)
 export(fad)
-
+S3method(print,fads)
+export(fads)

@@ -16,13 +16,13 @@
 #'   on consecutive step. Default 0.0001.
 #'
 #' @return An object of class \code{"fads"} with components
-#' \item{mmu}{The estimate mean.}
-#'\item{mL}{A matrix of loadings on the correlation scale, one column for each factor.  The
+#' \item{mu}{The estimate mean.}
+#'\item{loadings}{A matrix of loadings on the correlation scale, one column for each factor.  The
 #' factors are ordered in decreasing order of sums of squares of
 #' loadings, and given the sign that will make the sum of the loadings
 #' positive.This is of class \code{"loadings"}}
-#' \item{mD}{The uniquenesses computed on the correlation scale.}
-#' \item{msd}{The estimated standard deviations.}
+#' \item{uniquenesses}{The uniquenesses computed on the correlation scale.}
+#' \item{sd}{The estimated standard deviations.}
 #' \item{iter}{The number of iterations}
 #' \item{gerr}{the difference between the gradients on consecutive step.}
 #' \item{loglik}{The maximum log-likelihood.}
@@ -126,6 +126,11 @@ fads = function(inputs,q,ii = 123,M=NULL,L=NULL,D=NULL,
   #svd.H = svd(crossprod(out$mL,as.numeric(1/out$mD)*out$mL))
   #Z <- out$Y %*% (as.numeric(1/out$mD)*out$mL) %*% (svd.H$u %*% (1/svd.H$d * t(svd.H$v)))
   
-  return(list(iter = iter, gerr = out$gerr, loglik = llk, 
-              mmu = out$mmu, msd = sqrt(out$mvar), mD = out$mD, mL = out$mL))
+  
+  
+  fit <- list(iter = iter, gerr = out$gerr, loglik = llk, 
+              mu = out$mmu, sd = sqrt(out$mvar), uniquenesses = out$mD, loadings = out$mL)
+  class(fit$loadings) <- "loadings"
+  class(fit) <- "fads"
+  return(fit)
 }

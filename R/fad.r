@@ -321,6 +321,7 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
   fit$sd = 1/isds;
   fit$n.obs <- n.obs
   fit$call <- cl
+  class(fit) <- "fad"
   fit
 }
 
