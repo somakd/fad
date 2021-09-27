@@ -2,12 +2,16 @@
 #ifndef _EIGS_SYM_RXmD_CC
 #define _EIGS_SYM_RXmD_CC
 #define STRICT_R_HEADERS
+#define USE_FC_LEN_T
 #include <RcppEigen.h>
 #include <Rcpp.h>
 #include <SymEigs.h>
 #include <GenEigs.h>
 #include <RMatOp.h>
 #include <R_ext/BLAS.h>  // for BLAS and F77_CALL
+#ifndef FCONE
+# define FCONE
+#endif
 
 using namespace Spectra;
 
@@ -72,7 +76,7 @@ public:
     F77_CALL(dgemv)("N", &nrow, &ncol,
              &BLAS_one, mat_ptr, &nrow,
              (const double*)y_out, &BLAS_one_int, &BLAS_zero,
-             v, &BLAS_one_int);
+             v, &BLAS_one_int  FCONE);
 
     double a = 0.0, b = 0.0;
     for(int j=0;j<ncol;++j)
@@ -93,7 +97,7 @@ public:
     F77_CALL(dgemv)("T", &nrow, &ncol,
              &BLAS_1byn, mat_ptr, &nrow,
              (const double*)v, &BLAS_one_int, &BLAS_one,
-             y_out, &BLAS_one_int);
+             y_out, &BLAS_one_int  FCONE);
 
     for(int i=0;i<ncol;++i)
       y_out[i] *= D_ptr[i];
