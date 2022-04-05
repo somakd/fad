@@ -7,7 +7,12 @@
 #include <SymEigs.h>
 #include <GenEigs.h>
 #include <RMatOp.h>
+
+
 #include <R_ext/BLAS.h>  // for BLAS and F77_CALL
+#ifndef FCONE
+# define FCONE
+#endif
 
 using namespace Spectra;
 
@@ -34,8 +39,6 @@ private:
   const int BLAS_one_int;
   const double BLAS_zero;
   const double BLAS_1byn;
-  const char trans='T';
-  const char ntrans='N';
 
 public:
 
@@ -71,10 +74,10 @@ public:
     for(int i=0;i<nrow;++i) v[i] = 0;
 
     // compute v = X*y
-    F77_CALL(dgemv)(&ntrans, &nrow, &ncol,
+    F77_CALL(dgemv)("N", &nrow, &ncol,
              &BLAS_one, mat_ptr, &nrow,
              (const double*)y_out, &BLAS_one_int, &BLAS_zero,
-             v, &BLAS_one_int);
+             v, &BLAS_one_int FCONE);
 
     double a = 0.0, b = 0.0;
     for(int j=0;j<ncol;++j)
@@ -92,10 +95,10 @@ public:
     // compute y_out = b*mu - a*ybar
     for(int j=0;j<ncol;++j) y_out[j] = b*mu_ptr[j] - a*ybar_ptr[j];
 
-    F77_CALL(dgemv)(&trans, &nrow, &ncol,
+    F77_CALL(dgemv)("T", &nrow, &ncol,
              &BLAS_1byn, mat_ptr, &nrow,
              (const double*)v, &BLAS_one_int, &BLAS_one,
-             y_out, &BLAS_one_int);
+             y_out, &BLAS_one_int FCONE);
 
     for(int i=0;i<ncol;++i)
       y_out[i] *= D_ptr[i];
