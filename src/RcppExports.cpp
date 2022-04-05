@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // ERF
 NumericVector ERF(int P, NumericVector Mu, NumericVector Sigma);
 RcppExport SEXP _fad_ERF(SEXP PSEXP, SEXP MuSEXP, SEXP SigmaSEXP) {
@@ -16,6 +21,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type Mu(MuSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type Sigma(SigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(ERF(P, Mu, Sigma));
+    return rcpp_result_gen;
+END_RCPP
+}
+// logIv
+NumericVector logIv(int P, NumericVector Mu, NumericVector Sigma);
+RcppExport SEXP _fad_logIv(SEXP PSEXP, SEXP MuSEXP, SEXP SigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type P(PSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Mu(MuSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Sigma(SigmaSEXP);
+    rcpp_result_gen = Rcpp::wrap(logIv(P, Mu, Sigma));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -35,6 +53,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type matclass(matclassSEXP);
     rcpp_result_gen = Rcpp::wrap(eigs_sym_RXmD(Xmat, mu, D, er, vr, ybar, nev, matclass));
     return rcpp_result_gen;
+END_RCPP
+}
+// sph
+void sph(SEXP X);
+RcppExport SEXP _fad_sph(SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type X(XSEXP);
+    sph(X);
+    return R_NilValue;
 END_RCPP
 }
 // postmdiag
@@ -148,7 +176,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fad_ERF", (DL_FUNC) &_fad_ERF, 3},
+    {"_fad_logIv", (DL_FUNC) &_fad_logIv, 3},
     {"_fad_eigs_sym_RXmD", (DL_FUNC) &_fad_eigs_sym_RXmD, 8},
+    {"_fad_sph", (DL_FUNC) &_fad_sph, 1},
     {"_fad_postmdiag", (DL_FUNC) &_fad_postmdiag, 2},
     {"_fad_colSumSqdgC", (DL_FUNC) &_fad_colSumSqdgC, 3},
     {"_fad_colSumSq", (DL_FUNC) &_fad_colSumSq, 3},

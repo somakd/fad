@@ -1,8 +1,8 @@
 Package: fad
 Type: Package
 Title: Factor Analysis for Data
-Version: 1.0-1
-Date: 2022-01-10
+Version: 0.8-0
+Date: 2022-04-05
 Authors@R: c(
     person("Somak", "Dutta", , "somakd@iastate.edu", c("aut", "cre")),
     person("Fan", "Dai", , "fd43@iastate.edu", "aut"),
@@ -24,4 +24,4 @@ LazyData: true
 NeedsCompilation: yes
 Suggests: knitr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.2

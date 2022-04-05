@@ -5,8 +5,16 @@ ERF <- function(P, Mu, Sigma) {
     .Call(`_fad_ERF`, P, Mu, Sigma)
 }
 
+logIv <- function(P, Mu, Sigma) {
+    .Call(`_fad_logIv`, P, Mu, Sigma)
+}
+
 eigs_sym_RXmD <- function(Xmat, mu, D, er, vr, ybar, nev, matclass) {
     .Call(`_fad_eigs_sym_RXmD`, Xmat, mu, D, er, vr, ybar, nev, matclass)
+}
+
+sph <- function(X) {
+    invisible(.Call(`_fad_sph`, X))
 }
 
 .postmdiag <- function(X, d) {

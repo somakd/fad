@@ -6,10 +6,10 @@ LLk_Dir <- function(X,mu0,L,D0){
   P = nrow(L);		  # dimensionality of the directional input
   q = ncol(L);            # number of factors
  
-  cmatdg = fad:::cmdg(L,D)
+  cmatdg = cmdg(L,D)
   logdetS = sum(log(D)) + 2*sum(log(1/sqrt(cmatdg)))
   iSm = mu/D - {1/D}*L%*%(cmatdg*crossprod(L, mu/D))
-  val =  fad:::taom(X,L,D,mu,cmatdg)
+  val =  taom(X,L,D,mu,cmatdg)
   Tao = val$tao
   Tao[Tao<1e-5] = 1e-5
   iSxM = val$iSxM

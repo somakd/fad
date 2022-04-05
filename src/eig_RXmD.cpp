@@ -2,16 +2,12 @@
 #ifndef _EIGS_SYM_RXmD_CC
 #define _EIGS_SYM_RXmD_CC
 #define STRICT_R_HEADERS
-#define USE_FC_LEN_T
 #include <RcppEigen.h>
 #include <Rcpp.h>
 #include <SymEigs.h>
 #include <GenEigs.h>
 #include <RMatOp.h>
 #include <R_ext/BLAS.h>  // for BLAS and F77_CALL
-#ifndef FCONE
-# define FCONE
-#endif
 
 using namespace Spectra;
 
@@ -38,6 +34,8 @@ private:
   const int BLAS_one_int;
   const double BLAS_zero;
   const double BLAS_1byn;
+  const char trans='T';
+  const char ntrans='N';
 
 public:
 
@@ -73,10 +71,10 @@ public:
     for(int i=0;i<nrow;++i) v[i] = 0;
 
     // compute v = X*y
-    F77_CALL(dgemv)("N", &nrow, &ncol,
+    F77_CALL(dgemv)(&ntrans, &nrow, &ncol,
              &BLAS_one, mat_ptr, &nrow,
              (const double*)y_out, &BLAS_one_int, &BLAS_zero,
-             v, &BLAS_one_int  FCONE);
+             v, &BLAS_one_int);
 
     double a = 0.0, b = 0.0;
     for(int j=0;j<ncol;++j)
@@ -94,10 +92,10 @@ public:
     // compute y_out = b*mu - a*ybar
     for(int j=0;j<ncol;++j) y_out[j] = b*mu_ptr[j] - a*ybar_ptr[j];
 
-    F77_CALL(dgemv)("T", &nrow, &ncol,
+    F77_CALL(dgemv)(&trans, &nrow, &ncol,
              &BLAS_1byn, mat_ptr, &nrow,
              (const double*)v, &BLAS_one_int, &BLAS_one,
-             y_out, &BLAS_one_int  FCONE);
+             y_out, &BLAS_one_int);
 
     for(int i=0;i<ncol;++i)
       y_out[i] *= D_ptr[i];
@@ -138,7 +136,7 @@ RcppExport SEXP eigs_sym_RXmD(
     n = INTEGER(dim)[1];
     op = new RXmD(X,mu,D, er, vr, ybar, m, n);
   } else {
-    Rcpp::stop("Currently only X of class matrix supported.\ndgCMatrix coming soon");
+    Rcpp::stop("Currently only X of class matrix supported.");
   }
   int ncv = std::min(std::min(n,m), std::max(2 * nev + 1, 20));
 

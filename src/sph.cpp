@@ -1,6 +1,6 @@
 #ifndef _SPH_CC_
 #define _SPH_CC_
-
+#define STRICT_R_HEADERS
 #include <Rcpp.h>
 using namespace Rcpp;
 

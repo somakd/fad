@@ -2,13 +2,7 @@
 #ifndef E_R_CPP
 #define E_R_CPP
 
-/*
- * #include <iostream>
- * #include <iomanip>
- * #include <limits>
- * #include <time.h>
- * // using namespace std;
- */
+#define STRICT_R_HEADERS
 #include <Rcpp.h>
 using namespace Rcpp;
 #include <math.h>
@@ -99,7 +93,6 @@ NumericVector logIv(int P, NumericVector Mu, NumericVector Sigma)
   return out;
 }
 
-// [[Rcpp::export]]
 static double logI(int k,double mu,double sigma)
 {
   double theta = mu/(sigma*M_SQRT2);
@@ -155,7 +148,7 @@ static double logI(int k,double mu,double sigma)
   return(result);
 }
 
-// [[Rcpp::export]]
+
 static double logratio(int k,double mu,double sigma)
 {
     double theta = mu/(sigma*M_SQRT2);
@@ -420,7 +413,6 @@ static const double w87b[23] = {
     0.037361073762679023410321241766599
 } ;
 
-// [[Rcpp::export]]
 static double
         rescale_error (double err, const double & result_abs, const double &result_asc)
 {
@@ -452,7 +444,6 @@ static double
     return err ;
 }
 
-// [[Rcpp::export]]
 static int QNG(double &a, double &b, double &result,
         int numk,double &z1,double &theta,double &klogz1ptheta)
 {
