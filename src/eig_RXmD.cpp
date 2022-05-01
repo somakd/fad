@@ -2,6 +2,11 @@
 #ifndef _EIGS_SYM_RXmD_CC
 #define _EIGS_SYM_RXmD_CC
 #define STRICT_R_HEADERS
+
+#ifndef USE_FC_LEN_T
+#define USE_FC_LEN_T
+#endif
+
 #include <RcppEigen.h>
 #include <Rcpp.h>
 #include <SymEigs.h>
