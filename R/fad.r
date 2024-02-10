@@ -93,6 +93,8 @@ fad <- function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
                   control = NULL, lower=0.005,...)
 {
 
+  # This code has been modified from factanal function in base R.
+  
   cl <- match.call()
   na.act <- NULL
   if (is.list(covmat)) {

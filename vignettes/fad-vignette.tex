@@ -22,17 +22,11 @@
  pdfstartview={XYZ null null 1}}
  \usepackage{authblk}
 
+\usepackage{Sweave}
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+\input{fad-vignette-concordance}
 %\SweaveOpts{concordance=TRUE}
 
-<<setup, include=FALSE, cache=FALSE,echo=FALSE>>=
-library(knitr)
-# set global chunk options
-opts_chunk$set(fig.path='figure/fad-', fig.align='center', fig.show='hold')
-options(formatR.arrow=TRUE,width=90)
-Sys.setenv(RSTUDIO_PDFLATEX = "/Library/TeX/texbin/latexmk")
-@
 
 
 \title{An Introduction to \texttt{FAD} for Exploratory Factor Analysis with High-dimensional Gaussian Data}
@@ -59,13 +53,24 @@ Where $\mathbf{Y}$ denotes the $n\times p$ data matrix and $\bar{\mathbf{Y}}$ is
 \section{Main function in \texttt{FAD}}
 \label{sec:fad}
 Users can call the main \texttt{fad} function to estimate a factor model,
-<<load>>=
-library(fad)
-@
+\begin{Schunk}
+\begin{Sinput}
+> library(fad)
+\end{Sinput}
+\end{Schunk}
 All the available options in \texttt{fad} are shown below, followed with detailed descriptions,
-<<fad-arg>>==
-args(fad)
-@
+\begin{Schunk}
+\begin{Sinput}
+> args(fad)
+\end{Sinput}
+\begin{Soutput}
+function (x, factors, data = NULL, covmat = NULL, n.obs = NA, 
+    subset, na.action, start = NULL, scores = c("none", "regression", 
+        "Bartlett"), rotation = "varimax", control = NULL, lower = 0.005, 
+    ...) 
+NULL
+\end{Soutput}
+\end{Schunk}
 \begin{description}
 \item[\texttt{x}:] A formula or a numeric matrix or an object that can be coerced to a numeric matrix. 
 \item[\texttt{factor}:] The number of factors to be fitted.
@@ -104,45 +109,70 @@ In \texttt{fad}, only initialization of $\bm{\Psi}$ is required and is specified
 Note that the ML estimates for mean and standard deviations can be easily computed from sample mean and sample standard deviations.
 
 Here are examples for fitting a simulated $n\times p$ data matrix and a covariance matrix with $(n,p) = (50,100)$ with $q=3$. The diagonal entries of $\bm{\Psi}$ were randomly simulated from $\mathcal{U}(0.2,0.8)$ and the elements of $\bm{\Lambda}$ and $\bm{\mu}$ were from $\mathcal{N}(0,1)$. We use BIC to select the optimal factors from the set of $\{1,2,3,\cdots,10\}$.
-<<set-seed, include=FALSE>>==
-set.seed(1)
-@
-<<est-sim-data,cache=TRUE>>==
-n <- 50 # number of observations
-p <- 100 # size of coordinates
-q <- 3 # true number of factors
-mu = rnorm(p) 
-L = matrix(rnorm(p*q),p,q)
-D = runif(p,0.2,0.8)
-X = matrix(rnorm(n*q),n,q)
-X = tcrossprod(X,L) + matrix(rnorm(n*p),n,p)%*%diag(sqrt(D)) + rep(mu, each = n)
+\begin{Schunk}
+\begin{Sinput}
+> set.seed(1)
+\end{Sinput}
+\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> n <- 50 # number of observations
+> p <- 100 # size of coordinates
+> q <- 3 # true number of factors
+> mu = rnorm(p) 
+> L = matrix(rnorm(p*q),p,q)
+> D = runif(p,0.2,0.8)
+> X = matrix(rnorm(n*q),n,q)
+> X = tcrossprod(X,L) + matrix(rnorm(n*p),n,p)%*%diag(sqrt(D)) + rep(mu, each = n)
+> BICs = rep(0,11) # store BIC values
+> for(i in 1:11){
++   out = fad(x = X,factors = i-1)
++   BICs[i] = out$BIC
++ }
+> BICs
+\end{Sinput}
+\begin{Soutput}
+ [1] 5000.000 7968.064 5710.338 2757.197 2964.519 3180.684 3424.097 3670.370 3907.545
+[10] 4149.712 4394.159
+\end{Soutput}
+\begin{Sinput}
+> ind = which.min(BICs)-1# obtain the optimal factor favored by BIC
+> ind
+\end{Sinput}
+\begin{Soutput}
+[1] 3
+\end{Soutput}
+\end{Schunk}
 
-BICs = rep(0,11) # store BIC values
-for(i in 1:11){
-  out = fad(x = X,factors = i-1)
-  BICs[i] = out$BIC
-}
-BICs
-ind = which.min(BICs)-1# obtain the optimal factor favored by BIC
-ind
-@
-
-<<est-sim-cov1,cache=TRUE>>==
-BICs = rep(0,11) # store BIC values
-for(i in 1:11){
-  out = fad(covmat = cov(X), n.obs = n, factors = i-1)
-  BICs[i] = out$BIC
-}
-BICs
-ind = which.min(BICs)-1
-ind
-@
+\begin{Schunk}
+\begin{Sinput}
+> BICs = rep(0,11) # store BIC values
+> for(i in 1:11){
++   out = fad(covmat = cov(X), n.obs = n, factors = i-1)
++   BICs[i] = out$BIC
++ }
+> BICs
+\end{Sinput}
+\begin{Soutput}
+ [1] 5000.000 8069.077 5811.352 2858.210 3065.532 3281.697 3525.110 3771.384 4008.559
+[10] 4250.725 4495.173
+\end{Soutput}
+\begin{Sinput}
+> ind = which.min(BICs)-1
+> ind
+\end{Sinput}
+\begin{Soutput}
+[1] 3
+\end{Soutput}
+\end{Schunk}
 
 BIC selected the correct factor of 3 and we can then fit with the optimal factor model as
-<<est-sim-cov2,cache=TRUE>>==
-out1 = fad(x = X,factors = 3)
-# or
-out2 = fad(covmat = cov(X), n.obs = n, factors = 3)
-@
+\begin{Schunk}
+\begin{Sinput}
+> out1 = fad(x = X,factors = 3)
+> # or
+> out2 = fad(covmat = cov(X), n.obs = n, factors = 3)
+\end{Sinput}
+\end{Schunk}
 
 \end{document}
