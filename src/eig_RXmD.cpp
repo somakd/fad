@@ -7,11 +7,14 @@
 #define USE_FC_LEN_T
 #endif
 
+// Use the new Spectra v1.y.z if available
+#ifndef PREFER_SPECTRA_1YZ
+#define PREFER_SPECTRA_1YZ
+#endif
+
 #include <RcppEigen.h>
 #include <Rcpp.h>
 #include <SymEigs.h>
-#include <GenEigs.h>
-#include <RMatOp.h>
 
 
 #include <R_ext/BLAS.h>  // for BLAS and F77_CALL
@@ -27,7 +30,7 @@ typedef Eigen::Map<Eigen::MatrixXd> MapMat;
 
 //input mat: X, vec: ER, VR, Ybar, mu, D
 //--> DCD: C = ERX'ERX/N - muYbar' - Ybarmu' + mumu' + VRX'X/N
-class RXmD : public MatProd
+class RXmD
 {
 
 private:
@@ -46,6 +49,8 @@ private:
   const double BLAS_1byn;
 
 public:
+  // Required by Spectra >= v1.0.0
+  using Scalar = double;
 
   RXmD(const NumericMatrix mat_,const  NumericVector mu_,const  NumericVector D_,
        const NumericVector er_, const NumericVector vr_, const NumericVector ybar_,
@@ -71,7 +76,7 @@ public:
 
   // compute DCD*x
 
-  void perform_op(const double *x_in, double *y_out)
+  void perform_op(const double *x_in, double *y_out) const
   {
     // compute y = D*x and set all v[i] = 0.0
     for(int i=0;i<ncol;++i) y_out[i] = D_ptr[i]*x_in[i];
@@ -109,10 +114,6 @@ public:
       y_out[i] *= D_ptr[i];
     }
 
-  void perform_tprod(const double *x_in, double *y_out) {
-    perform_op(x_in,y_out);
-  }
-
 
 
   ~RXmD() {
@@ -148,10 +149,19 @@ RcppExport SEXP eigs_sym_RXmD(
   }
   int ncv = std::min(std::min(n,m), std::max(2 * nev + 1, 20));
 
-  SymEigsSolver<double, LARGEST_MAGN, RXmD> eigs(op, nev, ncv);
-
+// If the RSpectra package that is linked to contains the new Spectra v1.y.z,
+// then it will define a macro called SPECTRA_1YZ_INCLUDED
+// Otherwise, fall back to the old API
+#ifdef SPECTRA_1YZ_INCLUDED
+  SymEigsSolver<RXmD> eigs(*op, nev, ncv);
   eigs.init();
-  nconv = eigs.compute(maxitr,tol);
+  nconv = eigs.compute(SortRule::LargestMagn, maxitr, tol);
+#else
+  SymEigsSolver<double, LARGEST_MAGN, RXmD> eigs(op, nev, ncv);
+  eigs.init();
+  nconv = eigs.compute(maxitr, tol);
+#endif
+
   if(nconv < nev)
     Rcpp::warning("only %d eigenvalue(s) converged, less than k = %d",
                   nconv, nev);
