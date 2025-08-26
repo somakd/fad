@@ -1,7 +1,7 @@
 \documentclass{article}
 %\VignetteEngine{knitr::knitr}
 %\VignetteEncoding{UTF-8}
-%\VignetteIndexEntry{fad vignette}
+%\VignetteIndexEntry{An Introduction to \texttt{FAD} for Exploratory Factor Analysis with High-dimensional Gaussian Data}
 
 \usepackage[sc]{mathpazo}
 \usepackage{bm}
@@ -23,15 +23,12 @@
  \usepackage{authblk}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
-%\SweaveOpts{concordance=TRUE}
 
 <<setup, include=FALSE, cache=FALSE,echo=FALSE>>=
 library(knitr)
 # set global chunk options
 opts_chunk$set(fig.path='figure/fad-', fig.align='center', fig.show='hold')
 options(formatR.arrow=TRUE,width=90)
-Sys.setenv(RSTUDIO_PDFLATEX = "/Library/TeX/texbin/latexmk")
 @
 
 
